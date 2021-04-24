@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .H_zi{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+    }
+    #current{
+      background-color: palegreen;
+      left: 50px;
+      top:800px;
+    }
+    #target{
+      background-color: plum;
+      left: 500px;
+      top:50px;
+    }
+  </style>
+</head>
+<input type="button" id="btn" value="按钮">
+<!--<div class="H_zi" id="current"></div>-->
+<!--<div class="H_zi" id="target"></div>-->
+<body>
+<script src="../commn.js"></script>
+
+<script>
+  my$("btn").onclick=function () {
+    createLine(10,200,1000,600,"green",2,2,300);
+
+
+  };
+
+//  //获取任意元素的任意样式属性的值
+//  function getStyle(element,styleArr) {
+//    return  window.getComputedStyle?window.getComputedStyle(element,null)[styleArr]:element.currentStyle[styleArr];
+//  }
+//  var X1= parseInt(getStyle(my$("current"),"left"));
+//  var Y1= parseInt(getStyle(my$("current"),"top"));
+//  var X2= parseInt(getStyle(my$("target"),"left"));
+//  var Y2= parseInt(getStyle(my$("target"),"top"));
+
+
+  //给出起点和终点画出直线
+  function createLine(X1,Y1,X2,Y2,dot_color,dot_h,dot_w,num) {
+    var a=X2-X1;
+    var b=Y2-Y1;
+    var c=0;
+    var X=X1;
+    var Y=Y1;
+    var increment;
+    function createDot() {
+      var dot=document.createElement("div");
+      document.body.appendChild(dot);
+      dot.style.position=" absolute";
+      dot.style.height=dot_h+"px";
+      dot.style.width=dot_w+"px";
+      dot.style.background=dot_color;
+      dot.style.left=X+"px";
+      dot.style.top=Y+"px";
+    }
+    for(var i=0;i<num;i++){
+      if(X1<X2&&Y1<Y2){
+        increment=Math.abs(X2-X1)/200;
+        X+=increment;
+        c=X-X1;
+        Y=(b*c+a*Y1)/a;
+        createDot();
+        if(X>X2&&Y>Y2){
+          break;
+        }
+      }else if (X1==X2&&Y1<Y2){
+        increment=Math.abs(Y2-Y1)/200;
+        Y+=increment;
+        createDot();
+        if(Y>Y2){
+          break;
+        }
+      } else if(X1>X2&&Y1<Y2){
+        increment=Math.abs(X2-X1)/300;
+        X-=increment;
+        c=X1-X;
+        a=X1-X2;
+        Y=(b*c+a*Y1)/a;
+        createDot();
+        if(X<X2&&Y>Y2){
+          break;
+        }
+      }else if(X1<X2&&Y1==Y2){
+        increment=Math.abs(X2-X1)/200;
+        X+=increment;
+        createDot();
+        if(X>X2){
+          break;
+        }
+      }else if(X1>X2&&Y1==Y2){
+        increment=Math.abs(X2-X1)/200;
+        X-=increment;
+        createDot();
+        if(X<X2){
+          break;
+        }
+      }
+      else if(X2<X1&&Y2<Y1){
+        increment=Math.abs(X2-X1)/200;
+        X-=increment;
+        c=X1-X;
+        Y=(b*c-a*Y1)/-a;
+        createDot();
+        if(X<X2&&Y<Y2){
+          break;
+        }
+      }else if(X1==X2&&Y2<Y1){
+        increment=Math.abs(Y2-Y1)/200;
+        Y-=increment;
+        createDot();
+        if(Y<Y2){
+          break;
+        }
+      }else if(X2>X1&&Y2<Y1){
+        increment=Math.abs(X2-X1)/200;
+        X+=increment;
+        c=X-X1;
+        Y=(b*c+a*Y1)/a;
+        createDot();
+        if(X>X2&&Y<Y2){
+          break;
+        }
+      }
+
+    }
+  }
+
+
+</script>
+</body>
+</html>
